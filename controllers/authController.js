@@ -83,4 +83,12 @@ const loginPost = async (req, res) => {
   }
 };
 
-module.exports = { signupGet, signupPost, loginGet, loginPost };
+// @desc    Logout User
+// @route   GET /logout
+// @access  Private
+const logout = async (req, res) => {
+  res.cookie("jwt", "", { maxAge: 1 });
+  res.redirect("/");
+};
+
+module.exports = { signupGet, signupPost, loginGet, loginPost, logout };

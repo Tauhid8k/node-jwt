@@ -4,6 +4,7 @@ require("dotenv").config();
 const mongoose = require("mongoose");
 const authRoutes = require("./routes/authRoutes");
 const cookieParser = require("cookie-parser");
+const { requireAuth, checkUser } = require("./middleware/authMiddleware");
 
 // middleware
 app.use(express.static("public"));
@@ -30,6 +31,7 @@ app.listen(5000, () => {
 });
 
 // routes
+app.get("*", checkUser);
 app.use(authRoutes);
 app.get("/", (req, res) => res.render("home"));
-app.get("/items", (req, res) => res.render("items"));
+app.get("/items", requireAuth, (req, res) => res.render("items"));
